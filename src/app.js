@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import path from 'path';
+import cors from 'cors';
 import { errorHandler, notFoundHandler } from '../middleware/errorHandler.js';
 import articlesRoute from './api/routes/articles.js';
 import productsRoute from './api/routes/products.js';
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(helmet());
+app.use(cors());
 
 app.use(express.static(path.join(dirname, '/public')));
 
@@ -23,8 +25,8 @@ app.use(express.json());
 app.use('/articles', articlesRoute);
 app.use('/products', productsRoute);
 
-app.use(errorHandler);
 app.use(notFoundHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
